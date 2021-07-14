@@ -1,0 +1,35 @@
+plugins {
+    id 'org.springframework.boot' version '2.4.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+    id 'war'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    //testImplementation 'junit:junit:4.11'
+    //testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    //testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.2'
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.5.2'
+    implementation 'org.postgresql:postgresql:42.2.23'
+    //эта зараза автоматически со spring-boot-starter-web
+    implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.46'
+    //не идет поэтому для отображения jsp приходится ее подсоединять
+
+    compileOnly 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor 'org.projectlombok:lombok:1.18.20'
+    implementation 'jstl:jstl:1.2'
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
+
+test {
+    useJUnitPlatform()
+}
