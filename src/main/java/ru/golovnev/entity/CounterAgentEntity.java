@@ -1,7 +1,7 @@
-package sber.entity;
+package ru.golovnev.entity;
 
 import lombok.*;
-import sber.model.CounterAgentModel;
+import ru.golovnev.model.CounterAgent;
 
 import javax.persistence.*;
 
@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Builder
 @Entity
 @Table(name = "counteragents")
-public class CounterAgent {
+public class CounterAgentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -32,8 +32,8 @@ public class CounterAgent {
     @Column(name = "bik")
     private String bik;
 
-    public static CounterAgent from(CounterAgentModel newAgent) {
-        return CounterAgent.builder()
+    public static CounterAgentEntity from(CounterAgent newAgent) {
+        return CounterAgentEntity.builder()
                 .name(newAgent.getName())
                 .inn(newAgent.getInn())
                 .kpp(newAgent.getKpp())

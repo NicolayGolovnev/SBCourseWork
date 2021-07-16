@@ -14,32 +14,7 @@
     <title>New Page</title>
 </head>
 <body>
-<%--@elvariable id="agentForm" type="sber.model.CounterAgentModel"--%>
-<form:form method="POST" action="/counteragents/new" modelAttribute="agentForm">
-    <label for="name">Наименование
-            <%--                <input class="input-field" type="text" id="name" name="name"/>--%>
-        <form:input type="text" id="name" path="name"/>
-        <form:errors path="name" cssClass="error"/>
-    </label>
-    <label for="inn">ИНН
-            <%--                <input class="input-field" type="text" id="inn" name="inn">--%>
-        <form:input type="text" id="inn"  path="inn"/>
+<%--@elvariable id="agentForm" type="ru.golovnev.model.CounterAgent"--%>
 
-    </label>
-    <label for="kpp">КПП
-            <%--                <input class="input-field" type="text" id="kpp" name="kpp">--%>
-        <form:input type="text" id="kpp" path="kpp"/>
-    </label>
-    <label for="numberAccount">Номер счета
-            <%--                <input class="input-field" type="text" id="numberAccount" name="numberAccount">--%>
-        <form:input type="text" id="numberAccount" path="numberAccount"/>
-    </label>
-    <label for="bik">БИК банка
-            <%--                <input class="input-field" type="text" id="bik" name="bik">--%>
-        <form:input type="text" id="bik" path="bik"/>
-    </label>
-    <button type="submit" >Добавить</button>
-    <button type="button" ><a href="/counteragents">Назад</a></button>
-</form:form>
 </body>
 </html>

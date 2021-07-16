@@ -14,8 +14,11 @@
     <title>Update Page</title>
 </head>
 <body>
-<%--@elvariable id="updateAgent" type="sber.model.CounterAgentModel"--%>
+<%--@elvariable id="updateAgent" type="ru.golovnev.model.CounterAgent"--%>
 <form:form method="POST" action="/counteragents/update" modelAttribute="updateAgent">
+    <label for="id">ID
+        <form:input path="id" readonly="true" id="id" cssStyle="background-color: #bbbaba"/>
+    </label>
     <label for="name">Наименование
             <%--                <input class="input-field" type="text" id="name" name="name"/>--%>
         <form:input type="text" id="name" path="name"/>
@@ -23,7 +26,7 @@
     </label>
     <label for="inn">ИНН
             <%--                <input class="input-field" type="text" id="inn" name="inn">--%>
-        <form:input type="text" id="inn"  path="inn"/>
+        <form:input type="text" id="inn" path="inn"/>
 
     </label>
     <label for="kpp">КПП
@@ -38,8 +41,8 @@
             <%--                <input class="input-field" type="text" id="bik" name="bik">--%>
         <form:input type="text" id="bik" path="bik"/>
     </label>
-    <button type="submit" >Добавить</button>
-    <button type="button" ><a href="/counteragents">Назад</a></button>
+    <button type="submit">Изменить</button>
+    <button type="button"><a href="/counteragents">Назад</a></button>
 </form:form>
 </body>
 </html>

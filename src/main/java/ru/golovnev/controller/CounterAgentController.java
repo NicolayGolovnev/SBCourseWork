@@ -1,4 +1,4 @@
-package sber.controller;
+package ru.golovnev.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import sber.model.CounterAgentModel;
-import sber.service.CounterAgentCrudService;
+import ru.golovnev.model.CounterAgent;
+import ru.golovnev.service.CounterAgentCrudService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -24,27 +24,16 @@ public class CounterAgentController {
 //    private Validator counterAgentValidator;
 
     @GetMapping("/counteragents")
-    public ModelAndView getAllUsers(Model model) {
-        List<CounterAgentModel> agentList = counterAgentCrudService.findAll();
-//        ModelAndView modelAndView = new ModelAndView("counteragents");
-//        modelAndView.addObject("counterAgentsFromServer", agentList);
+    public ModelAndView getAllUsers(@ModelAttribute("agentForm") CounterAgent agentForm, Model model) {
+        List<CounterAgent> agentList = counterAgentCrudService.findAll();
         model.addAttribute("counterAgentsFromServer", agentList);
         return new ModelAndView("/counteragents", model.asMap());
     }
 
-    @GetMapping("/counteragents/new")
-    public ModelAndView getAgent(@ModelAttribute("agentForm") CounterAgentModel model) {
-        log.error("GET FORM AGENT CREATE");
-        return new ModelAndView("/counteragents/new");
-    }
-
     @PostMapping("/counteragents/new")
-    public ModelAndView addAgent(@ModelAttribute("agentForm") @Valid CounterAgentModel agentForm,
+    public ModelAndView addAgent(@ModelAttribute("agentForm") @Valid CounterAgent agentForm,
                                  BindingResult bindingResult,
                                  Model model) {
-
-//        CounterAgentModel.createAgentForm(agentForm);
-//        counterAgentValidator.validate(agentForm, bindingResult);
         log.error("CREATE NEW AGENT");
         if (bindingResult.hasErrors()){
             log.error("AGENT HAS TROUBLES IN FIELDS");
@@ -57,25 +46,20 @@ public class CounterAgentController {
     }
 
     @GetMapping("/counteragents/update/{id}")
-    public ModelAndView updateAgent(@PathVariable("id") Long id, Model model) {
-        log.error("GET FORM AGENT UPDATE");
-        CounterAgentModel agent = counterAgentCrudService.findById(id);
+    public ModelAndView createAgentUpdateForm(@PathVariable("id") Long id, Model model) {
+        CounterAgent agent = counterAgentCrudService.findById(id);
         model.addAttribute("updateAgent", agent);
-        log.info(model.toString());
         return new ModelAndView("/counteragents/update");
     }
 
     @PostMapping("/counteragents/update")
-    public ModelAndView updateAgentForm(@ModelAttribute("updateAgent") CounterAgentModel agent) {
-        log.error("UPDATED AGENT");
-        counterAgentCrudService.save(agent);
+    public ModelAndView updateAgent(@ModelAttribute("updateAgent") CounterAgent agent) {
+        counterAgentCrudService.update(agent);
         return new ModelAndView("redirect:/counteragents");
-
     }
 
     @GetMapping("/counteragents/delete/{id}")
     public ModelAndView deleteAgent(@PathVariable("id") Long id) {
-        log.error("GET ACTION AGENT DELETE");
         counterAgentCrudService.deleteById(id);
         return new ModelAndView("redirect:/counteragents");
     }

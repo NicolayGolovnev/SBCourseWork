@@ -1,7 +1,9 @@
 function openForm() {
-    document.getElementById("myFormPopup").style.display = "block";
+    document.getElementById("backgroundForm").style.display = "block";
+    document.getElementById("formWindow").style.display = "block";
 }
 
 function closeForm() {
-    document.getElementById("myFormPopup").style.display = "none";
+    document.getElementById("backgroundForm").style.display = "none";
+    document.getElementById("formWindow").style.display = "none";
 }

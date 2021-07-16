@@ -1,4 +1,4 @@
-package sber.model;
+package ru.golovnev.model;
 
 import lombok.*;
 
@@ -7,11 +7,11 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @ToString
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
-public class CounterAgentModel {
+public class CounterAgent {
     private long id;
 
     @NotEmpty(message = "Поле не должно быть пустым")
@@ -25,7 +25,6 @@ public class CounterAgentModel {
     private int kpp;
 
     private String numberAccount;
-
 
     private String bik;
 
