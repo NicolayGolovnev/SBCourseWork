@@ -1,6 +1,7 @@
 package sber.entity;
 
 import lombok.*;
+import sber.model.CounterAgentModel;
 
 import javax.persistence.*;
 
@@ -8,15 +9,17 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@Entity
 @Builder
+@Entity
 @Table(name = "counteragents")
 public class CounterAgent {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "inn")
     private String inn;
 
@@ -29,13 +32,13 @@ public class CounterAgent {
     @Column(name = "bik")
     private String bik;
 
-    public static CounterAgent from(CounterAgentForm form) {
+    public static CounterAgent from(CounterAgentModel newAgent) {
         return CounterAgent.builder()
-                .name(form.getName())
-                .inn(form.getInn())
-                .kpp(form.getKpp())
-                .numberAccount(form.getNumberAccount())
-                .bik(form.getBik())
+                .name(newAgent.getName())
+                .inn(newAgent.getInn())
+                .kpp(newAgent.getKpp())
+                .numberAccount(newAgent.getNumberAccount())
+                .bik(newAgent.getBik())
                 .build();
     }
 }

@@ -1,59 +1,82 @@
 package sber.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import sber.entity.CounterAgent;
-import sber.entity.CounterAgentForm;
-import sber.service.CounterAgentService;
+import sber.model.CounterAgentModel;
+import sber.service.CounterAgentCrudService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
+@Slf4j
 public class CounterAgentController {
 
     @Autowired
-    private CounterAgentService counterAgentService;
+    private CounterAgentCrudService counterAgentCrudService;
 
-    @RequestMapping(path = "/counteragents", method = RequestMethod.GET)
-    public ModelAndView getAllUsers() {
+//    @Autowired
+//    @Qualifier("counterAgentValidator")
+//    private Validator counterAgentValidator;
 
-        List<CounterAgent> agentList = counterAgentService.findAll();
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("counteragents");
-
-        modelAndView.addObject("counterAgentsFromServer", agentList);
-        return modelAndView;
+    @GetMapping("/counteragents")
+    public ModelAndView getAllUsers(Model model) {
+        List<CounterAgentModel> agentList = counterAgentCrudService.findAll();
+//        ModelAndView modelAndView = new ModelAndView("counteragents");
+//        modelAndView.addObject("counterAgentsFromServer", agentList);
+        model.addAttribute("counterAgentsFromServer", agentList);
+        return new ModelAndView("/counteragents", model.asMap());
     }
 
+    @GetMapping("/counteragents/new")
+    public ModelAndView getAgent(@ModelAttribute("agentForm") CounterAgentModel model) {
+        log.error("GET FORM AGENT CREATE");
+        return new ModelAndView("/counteragents/new");
+    }
 
-//    @RequestMapping(path = "/users/test", method = RequestMethod.GET)
-//    public ModelAndView getAllUsersBy() {
-//
-//        List<User> userList = userService.test();
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("users");
-//
-//
-//        List<Car> cars = userList.stream().flatMap(s -> s.getCars().stream())
-//                .collect(Collectors.toList());
-//
-//        modelAndView.addObject("usersFromServer", userList);
-//        modelAndView.addObject("carsFromServer", cars);
-//        return modelAndView;
-//    }
+    @PostMapping("/counteragents/new")
+    public ModelAndView addAgent(@ModelAttribute("agentForm") @Valid CounterAgentModel agentForm,
+                                 BindingResult bindingResult,
+                                 Model model) {
 
-    @RequestMapping(path = "counteragents", method = RequestMethod.POST)
-    public ModelAndView addUser(CounterAgentForm agentForm) {
-        CounterAgent newAgent = CounterAgent.from(agentForm);
-        counterAgentService.save(newAgent);
+//        CounterAgentModel.createAgentForm(agentForm);
+//        counterAgentValidator.validate(agentForm, bindingResult);
+        log.error("CREATE NEW AGENT");
+        if (bindingResult.hasErrors()){
+            log.error("AGENT HAS TROUBLES IN FIELDS");
+            return new ModelAndView("/counteragents/new");
+        }
 
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("counteragents");
-        List<CounterAgent> agentList = counterAgentService.findAll();
-        modelAndView.addObject("counterAgentsFromServer", agentList);
-        return modelAndView;
+        counterAgentCrudService.save(agentForm);
+        model.addAttribute("agentForm", agentForm);
+        return new ModelAndView("redirect:/counteragents", model.asMap());
+    }
+
+    @GetMapping("/counteragents/update/{id}")
+    public ModelAndView updateAgent(@PathVariable("id") Long id, Model model) {
+        log.error("GET FORM AGENT UPDATE");
+        CounterAgentModel agent = counterAgentCrudService.findById(id);
+        model.addAttribute("updateAgent", agent);
+        log.info(model.toString());
+        return new ModelAndView("/counteragents/update");
+    }
+
+    @PostMapping("/counteragents/update")
+    public ModelAndView updateAgentForm(@ModelAttribute("updateAgent") CounterAgentModel agent) {
+        log.error("UPDATED AGENT");
+        counterAgentCrudService.save(agent);
+        return new ModelAndView("redirect:/counteragents");
+
+    }
+
+    @GetMapping("/counteragents/delete/{id}")
+    public ModelAndView deleteAgent(@PathVariable("id") Long id) {
+        log.error("GET ACTION AGENT DELETE");
+        counterAgentCrudService.deleteById(id);
+        return new ModelAndView("redirect:/counteragents");
     }
 }
