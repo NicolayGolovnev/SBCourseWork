@@ -24,7 +24,7 @@ public class CounterAgentEntity {
     private String inn;
 
     @Column(name = "kpp")
-    private int kpp;
+    private String kpp;
 
     @Column(name = "account")
     private String numberAccount;

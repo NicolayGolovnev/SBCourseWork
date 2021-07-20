@@ -14,49 +14,8 @@
     <title>Справочник контрагентов</title>
     <meta charset="UTF-8">
     <link href="<c:url value="css/modalWindow.css"/>" rel="stylesheet" type="text/css">
-<%--    <style>--%>
-<%--        .backgroundForm {--%>
-<%--            display: none;--%>
-<%--            background: rgba(102, 102, 102, 0.5);--%>
-<%--            width: 100%;--%>
-<%--            height: 100%;--%>
-<%--            position: absolute;--%>
-<%--            top: 0;--%>
-<%--            left: 0;--%>
-<%--        }--%>
-<%--        .formWindow {--%>
-<%--            display: none;--%>
-<%--            width: 300px;--%>
-<%--            height: 50px;--%>
-<%--            text-align: center;--%>
-<%--            padding: 15px;--%>
-<%--            border: 3px solid #0000cc;--%>
-<%--            border-radius: 10px;--%>
-<%--            color: #0000cc;--%>
-<%--            position: absolute;--%>
-<%--            top: 0;--%>
-<%--            right: 0;--%>
-<%--            bottom: 0;--%>
-<%--            left: 0;--%>
-<%--            margin: auto;--%>
-<%--            background: #fff;--%>
-<%--        }--%>
-<%--        .backgroundForm:target {display: block;}--%>
-<%--        .close {--%>
-<%--            display: inline-block;--%>
-<%--            border: 1px solid #0000cc;--%>
-<%--            color: #0000cc;--%>
-<%--            padding: 0 12px;--%>
-<%--            margin: 10px;--%>
-<%--            text-decoration: none;--%>
-<%--            background: #f2f2f2;--%>
-<%--            font-size: 14pt;--%>
-<%--            cursor:pointer;--%>
-<%--        }--%>
-<%--        .close:hover {background: #e6e6ff;}--%>
 
-<%--    </style>--%>
-    <script src="<c:url value="/js/script.js"/>"></script>
+    <script src="<c:url value="js/script.js"/>"></script>
 </head>
 <body>
 <div>
@@ -79,42 +38,15 @@
                 <td>${counteragent.kpp}</td>
                 <td>${counteragent.numberAccount}</td>
                 <td>${counteragent.bik}</td>
-                <td><a href="/counteragents/update/${counteragent.id}">Edit</a></td>
-                <td><a href="/counteragents/delete/${counteragent.id}">Delete</a></td>
+                <td><button type="button" onclick="location.href='/counteragents/update/${counteragent.id}'">Edit</button></td>
+                <td><button type="button" onclick="location.href='/counteragents/delete/${counteragent.id}'">Delete</button></td>
+<%--                <td><a href="/counteragents/update/${counteragent.id}">Edit</a></td>--%>
+<%--                <td><a href="/counteragents/delete/${counteragent.id}">Delete</a></td>--%>
             </tr>
         </c:forEach>
 
     </table>
     <hr/>
-</div>
-
-<div id="backgroundForm">
-    <form:form method="POST" action="/counteragents/new" modelAttribute="agentForm" id="formWindow">
-        <label for="name">Наименование
-                <%--                <input class="input-field" type="text" id="name" name="name"/>--%>
-            <form:input type="text" id="name" path="name"/>
-            <form:errors path="name" cssClass="error"/>
-        </label>
-        <label for="inn">ИНН
-                <%--                <input class="input-field" type="text" id="inn" name="inn">--%>
-            <form:input type="text" id="inn"  path="inn"/>
-
-        </label>
-        <label for="kpp">КПП
-                <%--                <input class="input-field" type="text" id="kpp" name="kpp">--%>
-            <form:input type="text" id="kpp" path="kpp"/>
-        </label>
-        <label for="numberAccount">Номер счета
-                <%--                <input class="input-field" type="text" id="numberAccount" name="numberAccount">--%>
-            <form:input type="text" id="numberAccount" path="numberAccount"/>
-        </label>
-        <label for="bik">БИК банка
-                <%--                <input class="input-field" type="text" id="bik" name="bik">--%>
-            <form:input type="text" id="bik" path="bik"/>
-        </label>
-        <button type="submit" >Добавить</button>
-        <button type="button" onclick="closeForm()" class="close">Отменить</button>
-    </form:form>
 </div>
 
 <%--<!-- Модальное окно №1 -->--%>
@@ -124,7 +56,7 @@
 <%--    <a class="close"title="Закрыть" href="#close"></a>--%>
 <%--</div>--%>
 
-<button type="button" onclick="openForm()">Добавить пользователя</button>
+<button type="button" onclick="location.href='/counteragents/new'">Добавить пользователя</button>
 <a href="/">Назад</a>
 </body>
 </html>

@@ -16,31 +16,15 @@ import java.util.Optional;
 public class CounterAgentCrudService {
 
     @Autowired
-    private CounterAgentRepository counterAgentRepository;
-
-    public List<CounterAgent> findAll() {
-        List<CounterAgentEntity> agentList = counterAgentRepository.findAll();
-        List<CounterAgent> agents = new ArrayList<>();
-        for (var agent: agentList) {
-            agents.add(CounterAgent.builder()
-                    .id(agent.getId())
-                    .name(agent.getName())
-                    .inn(agent.getInn())
-                    .kpp(agent.getKpp())
-                    .numberAccount(agent.getNumberAccount())
-                    .bik(agent.getBik())
-                    .build());
-        }
-        return agents;
-    }
+    private CounterAgentRepository repository;
 
     public void save(CounterAgent agent) {
         CounterAgentEntity inputAgent = CounterAgentEntity.from(agent);
-        CounterAgentEntity savedAgent = counterAgentRepository.save(inputAgent);
+        repository.save(inputAgent);
     }
 
     public void update(CounterAgent agent) {
-        Optional<CounterAgentEntity> agentDBO = counterAgentRepository.findById(agent.getId());
+        Optional<CounterAgentEntity> agentDBO = repository.findById(agent.getId());
         log.error(agent.toString());
         log.error(agentDBO.toString());
         if (agentDBO.isPresent()) {
@@ -52,24 +36,11 @@ public class CounterAgentCrudService {
             agentDB.setNumberAccount(agent.getNumberAccount());
             agentDB.setBik(agent.getBik());
 
-            counterAgentRepository.save(agentDB);
+            repository.save(agentDB);
         }
     }
 
     public void deleteById(Long id) {
-        counterAgentRepository.deleteById(id);
-    }
-
-    //убрать в конечном счете из круд-сервиса
-    public CounterAgent findById(Long id) {
-        Optional<CounterAgentEntity> agentDAO = counterAgentRepository.findById(id);
-        return CounterAgent.builder()
-                .id(agentDAO.get().getId())
-                .name(agentDAO.get().getName())
-                .inn(agentDAO.get().getInn())
-                .kpp(agentDAO.get().getKpp())
-                .numberAccount(agentDAO.get().getNumberAccount())
-                .bik(agentDAO.get().getBik())
-                .build();
+        repository.deleteById(id);
     }
 }

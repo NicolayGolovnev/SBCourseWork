@@ -16,7 +16,7 @@
 <body>
 <%--@elvariable id="updateAgent" type="ru.golovnev.model.CounterAgent"--%>
 <form:form method="POST" action="/counteragents/update" modelAttribute="updateAgent">
-    <label for="id">ID
+    <label for="id" hidden>ID
         <form:input path="id" readonly="true" id="id" cssStyle="background-color: #bbbaba"/>
     </label>
     <label for="name">Наименование

@@ -22,7 +22,7 @@ public class CounterAgent {
     private String inn;
 
     @Size(min = 9, max = 9, message = "Код содержит ровно 9 символов")
-    private int kpp;
+    private String kpp;
 
     private String numberAccount;
 
