@@ -37,6 +37,7 @@ public class CounterAgentController {
     public ModelAndView getAllUsers(Model model) {
         List<CounterAgent> agentList = finderService.findAll();
         model.addAttribute("counterAgentsFromServer", agentList);
+        model.addAttribute("deleteAgent", new CounterAgent());
         return new ModelAndView("/counteragents");
     }
 
@@ -96,7 +97,9 @@ public class CounterAgentController {
     }
 
     @PostMapping("/find/{search}")
-    public ModelAndView findAgent(@ModelAttribute("findByName") CounterAgent agent, @PathVariable("search") String field, Model model) {
+    public ModelAndView findAgent(@ModelAttribute("findByName") CounterAgent agent,
+                                  @PathVariable("search") String field,
+                                  Model model) {
         CounterAgent finder = new CounterAgent();
         if (field.equals("byName")) {
             finder = finderService.findByName(agent.getName());
@@ -108,6 +111,13 @@ public class CounterAgentController {
         model.addAttribute("finderAgent", finder);
         log.error(finder.toString());
         return new ModelAndView("/counteragents/showResult");
+    }
+
+    @PostMapping("/deleteByName")
+    @Transactional
+    public ModelAndView deleteAgentByName(@ModelAttribute("deleteAgent") CounterAgent agent) {
+        crudService.deleteByName(agent.getName());
+        return new ModelAndView("redirect:/counteragents");
     }
 
 }

@@ -43,4 +43,8 @@ public class CounterAgentCrudService {
     public void deleteById(Long id) {
         repository.deleteById(id);
     }
+
+    public void deleteByName(String name) {
+        repository.deleteByName(name);
+    }
 }

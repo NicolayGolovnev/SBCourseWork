@@ -1,41 +1,37 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: kolya
-  Date: 19.07.2021
-  Time: 20:19
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%--<% CounterAgent finder--%>
-<%--    %>--%>
 <html>
 <head>
-    <title>Title</title>
+    <title>Результат поиска</title>
+    <link href="/css/styles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-Результат поиска:
-<table>
-    <tr>
-        <th>Наименование</th>
-        <th>${finderAgent.name}</th>
-    </tr>
-    <tr>
-        <th>ИНН</th>
-        <th>${finderAgent.inn}</th>
-    </tr>
-    <tr>
-        <th>КПП</th>
-        <th>${finderAgent.kpp}</th>
-    </tr>
-    <tr>
-        <th>Номер счета</th>
-        <th>${finderAgent.numberAccount}</th>
-    </tr>
-    <tr>
-        <th>БИК банка</th>
-        <th>${finderAgent.bik}</th>
-    </tr>
-</table>
-<button type="button" onclick="location.href='/find'">Вернуться</button>
+<div class="content">
+    <div class="top">
+        <h2>Результат поиска:</h2>
+    </div>
+    <table class="showAgent">
+        <tr>
+            <th align="right">Наименование</th>
+            <th align="left">${finderAgent.name}</th>
+        </tr>
+        <tr>
+            <th align="right">ИНН</th>
+            <th align="left">${finderAgent.inn}</th>
+        </tr>
+        <tr>
+            <th align="right">КПП</th>
+            <th align="left">${finderAgent.kpp}</th>
+        </tr>
+        <tr>
+            <th align="right">Номер счета</th>
+            <th align="left">${finderAgent.numberAccount}</th>
+        </tr>
+        <tr>
+            <th align="right">БИК банка</th>
+            <th align="left">${finderAgent.bik}</th>
+        </tr>
+    </table>
+    <button type="button" onclick="location.href='/find'">Вернуться</button>
+</div>
 </body>
 </html>

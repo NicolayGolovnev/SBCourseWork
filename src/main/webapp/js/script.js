@@ -1,9 +1,15 @@
-function openForm() {
-    document.getElementById("backgroundForm").style.display = "block";
-    document.getElementById("formWindow").style.display = "block";
+function OnSelectionChange(select) {
+    var selectedValue = select.options[select.selectedIndex].value;
+    if (selectedValue === 'byName') {
+        document.getElementById("finderByName").hidden = false;
+        document.getElementById("finderByBikAndNumberAccount").hidden = true;
+    }
+    else if (selectedValue === 'byBikAndNumberAccount') {
+        document.getElementById("finderByName").hidden = true;
+        document.getElementById("finderByBikAndNumberAccount").hidden = false;
+    }
 }
 
-function closeForm() {
-    document.getElementById("backgroundForm").style.display = "none";
-    document.getElementById("formWindow").style.display = "none";
+function showFinderDiv() {
+    document.getElementById("finderDiv").hidden = false;
 }
