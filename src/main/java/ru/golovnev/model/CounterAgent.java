@@ -1,8 +1,12 @@
 package ru.golovnev.model;
 
 import lombok.*;
+import org.springframework.validation.annotation.Validated;
+import ru.golovnev.validations.annotations.ValidBikAndAccount;
+import ru.golovnev.validations.annotations.ValidInn;
+import ru.golovnev.validations.annotations.ValidName;
 
-import javax.validation.constraints.Max;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -11,22 +15,23 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ValidBikAndAccount
 public class CounterAgent {
     private long id;
 
     @NotEmpty(message = "Поле не должно быть пустым")
-    @Max(value = 20, message = "Имя не должно быть больше 20 символов")
+    @ValidName(message = "Такое наименование контрагента уже существует")
     private String name;
 
-    @Size(min = 10, max = 12, message = "ИНН должен иметь 10 или 12 знаков")
+    @ValidInn(message = "Инн должен быть корректным (10-значный или 12-значный)")
     private String inn;
 
-    @Size(min = 9, max = 9, message = "Код содержит ровно 9 символов")
+    @Size(min = 9, max = 9, message = "Код должен содержать 9 символов")
     private String kpp;
 
     private String numberAccount;
 
+    @Size(min = 9, max = 9, message = "БИК банка должен содержать 9 цифр")
     private String bik;
-
 
 }

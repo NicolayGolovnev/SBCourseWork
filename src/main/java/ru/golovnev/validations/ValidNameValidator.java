@@ -18,7 +18,6 @@ public class ValidNameValidator implements ConstraintValidator<ValidName, String
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        log.error("INPUT IN VALID NAME");
         List<CounterAgent> agentList = finder.findAll();
         List<String> agentNames = new ArrayList<>();
         for (var agent: agentList) {
