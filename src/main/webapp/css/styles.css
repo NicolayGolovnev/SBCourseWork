@@ -7,7 +7,10 @@ body {
     border: 2px solid #000000;
     border-radius: 15px;
     text-align: center;
-
+}
+.content form {
+    margin-block-start: 5px;
+    margin-block-end: 5px;
 }
 .top {
     border-top-left-radius: 12px;
@@ -36,12 +39,34 @@ body {
 .content button {
     color: #ffffff;
     background-color: #3b9665;
-    border: 1px solid #3b9665;
+    border: 2px solid #3b9665;
     border-radius: 7px;
     font-size: 18px;
+    margin: 5px;
 }
-.content button:hover, button[type=submit]:hover {
+.content button:hover {
     background: #2c704c;
+}
+
+.content button:focus {
+    border: 2px solid #23553e;
+    outline: none;
+}
+
+.content fieldset {
+    border-color: #d9ffe6;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.content input:focus {
+    border-color: #2bb75b;
+    outline: none;
+}
+
+.content p {
+    padding: 5px;
+    margin: 1%;
 }
 
 span.error {

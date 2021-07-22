@@ -1,3 +1,11 @@
+function openDltForm() {
+    document.getElementById("deleteForm").style.display = "block";
+}
+
+function closeDltForm() {
+    document.getElementById("deleteForm").style.display = "none";
+}
+
 function OnSelectionChange(select) {
     var selectedValue = select.options[select.selectedIndex].value;
     if (selectedValue === 'byName') {

@@ -31,6 +31,7 @@
             <th align="left">${finderAgent.bik}</th>
         </tr>
     </table>
+    <hr/>
     <button type="button" onclick="location.href='/find'">Вернуться</button>
 </div>
 </body>

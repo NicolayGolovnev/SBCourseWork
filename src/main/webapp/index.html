@@ -3,12 +3,32 @@
 <head>
     <title>Курсовая работа</title>
     <meta charset="UTF-8">
-    <link href="css/modalWindow.css" rel="stylesheet" type="text/css">
+    <link href="/css/styles.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-<div>
-    <a href="/counteragents">Посмотреть справочник контрагентов</a>
-    <a href="/find">Найти контрагентов</a>
+<div class="content">
+    <div class="top">
+        <h2>Курсовая работа. Справочник контрагентов</h2>
+    </div>
+    <p style="text-align: center">
+        <strong>Работу выполнил Головнев Н. А.</strong>
+    </p>
+    <p>
+        В данной курсовой работе была реализована модель данных и сервисы
+        для работы со &laquo;Справочником контрагентов&raquo;.
+    </p>
+    <p>
+        Справочник контрагентов содержит следующие поля +
+        (уникальный идентификатор в качестве первичного ключа):<br />
+        1. Наименование<br/>
+        2. ИНН<br/>
+        3. КПП<br/>
+        4. Номер счёта<br/>
+        5. БИК банка
+    </p>
+    <button type="button" onclick="location.href='/counteragents'">Посмотреть справочник контрагентов</button>
+    <button type="button" onclick="location.href='/find'">Найти контрагентов</button>
+    <button type="button" onclick="location.href='/swagger-ui/'">Документация</button>
 </div>
 </body>
 </html>

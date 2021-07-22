@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: kolya
-  Date: 16.07.2021
-  Time: 11:36
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -13,17 +6,16 @@
 <head>
     <title>Справочник контрагентов</title>
     <meta charset="UTF-8">
-    <link href="<c:url value="css/modalWindow.css"/>" rel="stylesheet" type="text/css">
-
-    <script src="<c:url value="js/script.js"/>"></script>
+    <link href="<c:url value="/css/styles.css"/>" rel="stylesheet" type="text/css">
+    <link href="<c:url value="/css/modalWindow.css"/>" rel="stylesheet" type="text/css">
+    <script src="<c:url value="/js/script.js"/>"></script>
 </head>
 <body>
-<div>
-    <div class="form-style-2">
-        Список контрагентов
+<div class="content">
+    <div class="top">
+        <h2>Список контрагентов</h2>
     </div>
-    <hr/>
-    <table>
+    <table class="showAgent">
         <tr>
             <th>Наименование</th>
             <th>ИНН</th>
@@ -33,30 +25,41 @@
         </tr>
         <c:forEach items="${counterAgentsFromServer}" var="counteragent">
             <tr>
-                <td>${counteragent.name}</td>
-                <td>${counteragent.inn}</td>
-                <td>${counteragent.kpp}</td>
-                <td>${counteragent.numberAccount}</td>
-                <td>${counteragent.bik}</td>
-                <td><button type="button" onclick="location.href='/counteragents/update/${counteragent.id}'">Edit</button></td>
-                <td><button type="button" onclick="location.href='/counteragents/delete/${counteragent.id}'">Delete</button></td>
-<%--                <td><a href="/counteragents/update/${counteragent.id}">Edit</a></td>--%>
-<%--                <td><a href="/counteragents/delete/${counteragent.id}">Delete</a></td>--%>
+                <td align="center">${counteragent.name}</td>
+                <td align="center">${counteragent.inn}</td>
+                <td align="center">${counteragent.kpp}</td>
+                <td align="center">${counteragent.numberAccount}</td>
+                <td align="center">${counteragent.bik}</td>
+                <td width="auto"><button type="button" onclick="location.href='/counteragents/update/${counteragent.id}'">Изменить</button></td>
+                <td width="auto"><button type="button" onclick="location.href='/counteragents/delete/${counteragent.id}'">Удалить</button></td>
             </tr>
         </c:forEach>
-
     </table>
     <hr/>
+    <button type="button" onclick="location.href='/counteragents/new'">Добавить пользователя</button>
+    <button type="button" onclick="openDltForm()">Удалить по наименованию</button>
+    <button type="button" onclick="location.href='/'">Вернуться</button>
 </div>
 
-<%--<!-- Модальное окно №1 -->--%>
-<%--<a href="#x" class="overlay" id="win1"></a>--%>
-<%--<div class="popup">--%>
-<%--    gfsdgsdfgsdgsdfg--%>
-<%--    <a class="close"title="Закрыть" href="#close"></a>--%>
-<%--</div>--%>
-
-<button type="button" onclick="location.href='/counteragents/new'">Добавить пользователя</button>
-<a href="/">Назад</a>
+<div id="deleteForm" class="modalDiv">
+    <div class="modalDiv-content">
+        <div class="top">
+            <h2>Удаление контрагента по наименованию</h2>
+        </div>
+        <%--@elvariable id="deleteAgent" type="ru.golovnev.model.CounterAgent"--%>
+        <form:form modelAttribute="deleteAgent" action="/deleteByName" method="post">
+            <label>Наименование:</label>
+            <form:input type="text" list="agentsNameList" path="name" autocomplete="false"/>
+            <datalist id="agentsNameList">
+                <c:forEach items="${counterAgentsFromServer}" var="agent">
+                    <option value="${agent.name}"></option>
+                </c:forEach>
+            </datalist>
+            <hr/>
+            <button type="submit">Удалить</button>
+            <button type="button" onclick="closeDltForm()">Закрыть</button>
+        </form:form>
+    </div>
+</div>
 </body>
 </html>
