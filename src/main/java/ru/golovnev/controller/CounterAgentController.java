@@ -3,7 +3,9 @@ package ru.golovnev.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.golovnev.model.CounterAgent;
@@ -13,6 +15,7 @@ import ru.golovnev.service.CounterAgentFinderService;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
@@ -47,7 +50,6 @@ public class CounterAgentController {
             for (var err: bindingResult.getAllErrors()) {
                 log.error(err.toString());
             }
-//            List<ObjectError> allErrors = bindingResult.getAllErrors();
             model.addAttribute("agentForm", agentForm);
             return new ModelAndView("/counteragents/new");
         }
@@ -65,8 +67,32 @@ public class CounterAgentController {
         return new ModelAndView("/counteragents/update");
     }
 
+    @GetMapping("/counteragents/update")
+    public ModelAndView updateAgent(@ModelAttribute("updateAgent") CounterAgent agent) {
+        log.info("[GET /counteragents/update]\tReturn page with model CounterAgent");
+        return new ModelAndView("/counteragents/update");
+    }
+
     @PostMapping("/counteragents/update")
-    public ModelAndView updateAgentPost(@ModelAttribute("updateAgent") CounterAgent agent) {
+    public ModelAndView updateAgentPost(@ModelAttribute("updateAgent") @Valid CounterAgent agent,
+                                        BindingResult bindingResult,
+                                        Model model) {
+        List<FieldError> errors = bindingResult.getFieldErrors().stream()
+                .filter(ferr -> !ferr.getField().equals("duplicateName"))
+                .collect(Collectors.toList());
+        BindingResult newBinding = new BeanPropertyBindingResult(agent, "updateAgent");
+        for (var err : errors) {
+            newBinding.addError(err);
+        }
+
+        if (newBinding.hasErrors()) {
+            log.error("[POST /counteragents/update]\tBindingResult: errors of validation CounterAgent");
+            for (var err: newBinding.getAllErrors()) {
+                log.error(err.toString());
+            }
+            model.addAttribute("updateAgent", agent);
+            return new ModelAndView("/counteragents/update");
+        }
         crudService.update(agent);
         log.info("[POST /counteragents/update]\tRedirect to page /counteragents");
         return new ModelAndView("redirect:/counteragents");
