@@ -1,9 +1,11 @@
 package ru.golovnev.service;
 
 import lombok.extern.slf4j.Slf4j;
+import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.golovnev.entity.CounterAgentEntity;
+import ru.golovnev.exception.AgentNotFoundException;
 import ru.golovnev.model.CounterAgent;
 import ru.golovnev.dao.CounterAgentRepository;
 
@@ -16,10 +18,14 @@ public class CounterAgentCrudService {
     @Autowired
     private CounterAgentRepository repository;
 
+    @Autowired
+    private MapperFacade mapperFacade;
+
     public void save(CounterAgent agent) {
-        CounterAgentEntity inputAgent = CounterAgentEntity.from(agent);
-        repository.save(inputAgent);
-        log.info("[CrudService]\tRepository: save agent - " + inputAgent);
+        CounterAgentEntity saveAgent = mapperFacade.map(agent, CounterAgentEntity.class);
+        repository.save(saveAgent);
+        log.info("[CrudService]\tConverted next agent (by Orika): " + agent);
+        log.info("[CrudService]\tRepository: save agent - " + saveAgent);
     }
 
     public void update(CounterAgent agent) {
@@ -36,6 +42,8 @@ public class CounterAgentCrudService {
             repository.save(agentDB);
             log.info("[CrudService]\tRepository: update agent - " + agentDB);
         }
+        else
+            throw new AgentNotFoundException("Agent[id = " + agent.getId() + "] could not find in repository");
     }
 
     public void deleteById(Long id) {

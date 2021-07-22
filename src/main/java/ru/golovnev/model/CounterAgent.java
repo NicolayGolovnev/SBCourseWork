@@ -1,12 +1,10 @@
 package ru.golovnev.model;
 
 import lombok.*;
-import org.springframework.validation.annotation.Validated;
-import ru.golovnev.validations.annotations.ValidBikAndAccount;
-import ru.golovnev.validations.annotations.ValidInn;
-import ru.golovnev.validations.annotations.ValidName;
+import ru.golovnev.validation.annotation.ValidBikAndAccount;
+import ru.golovnev.validation.annotation.ValidInn;
+import ru.golovnev.validation.annotation.ValidName;
 
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 

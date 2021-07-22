@@ -31,14 +31,4 @@ public class CounterAgentEntity {
 
     @Column(name = "bik")
     private String bik;
-
-    public static CounterAgentEntity from(CounterAgent newAgent) {
-        return CounterAgentEntity.builder()
-                .name(newAgent.getName())
-                .inn(newAgent.getInn())
-                .kpp(newAgent.getKpp())
-                .numberAccount(newAgent.getNumberAccount())
-                .bik(newAgent.getBik())
-                .build();
-    }
 }
