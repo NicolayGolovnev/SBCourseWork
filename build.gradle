@@ -5,7 +5,6 @@ plugins {
     id 'war'
 }
 
-group 'org.example'
 version '1.0-SNAPSHOT'
 
 repositories {
@@ -13,30 +12,31 @@ repositories {
 }
 
 dependencies {
-    //testImplementation 'junit:junit:4.11'
-    //testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-    //testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.5.2'
     implementation 'org.springframework.boot:spring-boot-starter-web:2.5.2'
-//    implementation 'org.springframework.boot:spring-boot-starter-validation:2.5.2'
+    implementation 'org.springframework.boot:spring-boot-starter-validation:2.5.2'
     implementation 'org.postgresql:postgresql:42.2.23'
-    //эта зараза автоматически со spring-boot-starter-web
+    //подключаем для отображения jsp-страниц, потому что автоматически со spring-boot-starter-web не идет
     implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:9.0.46'
-    //не идет поэтому для отображения jsp приходится ее подсоединять
 
     compileOnly 'org.projectlombok:lombok:1.18.20'
     annotationProcessor 'org.projectlombok:lombok:1.18.20'
     implementation 'jstl:jstl:1.2'
-    //    implementation 'org.jetbrains:annotations:20.1.0'
-//    implementation 'org.hibernate.validator:hibernate-validator:7.0.1.Final'
-    implementation 'org.springframework.boot:spring-boot-starter-validation:2.5.2'
+    implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
+    implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
+    implementation group: 'net.rakugakibox.spring.boot', name: 'orika-spring-boot-starter', version: '1.9.0'
 
-//    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
-
-    testImplementation('org.springframework.boot:spring-boot-starter-test')
+    testImplementation 'junit:junit:4.11'
+    testImplementation('org.springframework.boot:spring-boot-starter-test:2.5.2')
 }
 
 test {
     useJUnitPlatform()
+}
+bootJar {
+    enabled = false
+}
+
+jar {
+    enabled = true
 }
