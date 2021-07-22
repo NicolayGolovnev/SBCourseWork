@@ -1,5 +1,6 @@
 package ru.golovnev.service;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.golovnev.dao.CounterAgentRepository;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 public class CounterAgentFinderService {
 
     @Autowired
@@ -28,11 +30,13 @@ public class CounterAgentFinderService {
                     .bik(agent.getBik())
                     .build());
         }
+        log.info("[FinderService]\tFind the next agents:" + agentList);
         return agents;
     }
 
     public CounterAgent findById(Long id) {
         CounterAgentEntity agentDAO = repository.findById(id).orElseThrow();
+        log.info("[FinderService]\tFind the next agent by id:" + agentDAO);
         return CounterAgent.builder()
                 .id(agentDAO.getId())
                 .name(agentDAO.getName())
@@ -45,6 +49,7 @@ public class CounterAgentFinderService {
 
     public CounterAgent findByName(String name) {
         CounterAgentEntity agentDAO = repository.findFirstByName(name).orElseThrow();
+        log.info("[FinderService]\tFind the next agent by name:" + agentDAO);
         return CounterAgent.builder()
                 .name(agentDAO.getName())
                 .inn(agentDAO.getInn())
@@ -56,6 +61,7 @@ public class CounterAgentFinderService {
 
     public CounterAgent findByBikAndNumberAccount(String bik, String numberAccount) {
         CounterAgentEntity agentDAO = repository.findFirstByBikAndNumberAccount(bik, numberAccount).orElseThrow();
+        log.info("[FinderService]\tFind the next agent by bik and account:" + agentDAO);
         return CounterAgent.builder()
                 .name(agentDAO.getName())
                 .inn(agentDAO.getInn())

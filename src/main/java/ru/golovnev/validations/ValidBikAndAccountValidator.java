@@ -1,16 +1,14 @@
 package ru.golovnev.validations;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.golovnev.model.CounterAgent;
 import ru.golovnev.validations.annotations.ValidBikAndAccount;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+@Slf4j
 public class ValidBikAndAccountValidator implements ConstraintValidator<ValidBikAndAccount, CounterAgent> {
-
-    @Override
-    public void initialize(ValidBikAndAccount constraintAnnotation) {
-    }
 
     @Override
     public boolean isValid(CounterAgent value, ConstraintValidatorContext context) {
@@ -21,6 +19,7 @@ public class ValidBikAndAccountValidator implements ConstraintValidator<ValidBik
             context.buildConstraintViolationWithTemplate("Поле должно содержать 20 значений")
                     .addPropertyNode("numberAccount")
                     .addConstraintViolation();
+            log.error("[ValidBikAndAccount]\tValidation failed");
             return false;
         }
         if (bik.charAt(6) == '0' && bik.charAt(7) == '0')
@@ -29,6 +28,7 @@ public class ValidBikAndAccountValidator implements ConstraintValidator<ValidBik
                 context.buildConstraintViolationWithTemplate("Счет указан неверно - отсутствует в данном РКЦ (БИК)")
                         .addPropertyNode("numberAccount")
                         .addConstraintViolation();
+                log.error("[ValidBikAndAccount]\tValidation failed");
                 return false;
             }
         else
@@ -37,8 +37,10 @@ public class ValidBikAndAccountValidator implements ConstraintValidator<ValidBik
                 context.buildConstraintViolationWithTemplate("Коррсчет указан неверно - отсутствует в данном РКЦ (БИК)")
                         .addPropertyNode("numberAccount")
                         .addConstraintViolation();
+                log.error("[ValidBikAndAccount]\tValidation successful");
                 return false;
             }
+        log.info("[ValidBikAndAccount]\tValidation failed");
         return true;
     }
 

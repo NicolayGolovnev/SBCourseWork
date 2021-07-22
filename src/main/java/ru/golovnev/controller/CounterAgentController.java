@@ -4,21 +4,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.golovnev.model.CounterAgent;
 import ru.golovnev.service.CounterAgentCrudService;
 import ru.golovnev.service.CounterAgentFinderService;
 
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 @RestController
 @Slf4j
@@ -29,21 +23,18 @@ public class CounterAgentController {
     @Autowired
     private CounterAgentFinderService finderService;
 
-//    @Autowired
-//    @Qualifier("counterAgentValidator")
-//    private Validator counterAgentValidator;
-
     @GetMapping("/counteragents")
     public ModelAndView getAllUsers(Model model) {
         List<CounterAgent> agentList = finderService.findAll();
         model.addAttribute("counterAgentsFromServer", agentList);
         model.addAttribute("deleteAgent", new CounterAgent());
+        log.info("[GET /counteragents]\tReturn page with two model: CounterAgent and List<CounterAgent>");
         return new ModelAndView("/counteragents");
     }
 
     @GetMapping("/counteragents/new")
     public ModelAndView newAgent(@ModelAttribute("agentForm") CounterAgent counterAgent) {
-        log.error("PAGE OF CREATE A AGENT");
+        log.info("[GET /counteragents/new]\tReturn page with model CounterAgent");
         return new ModelAndView("/counteragents/new");
     }
 
@@ -51,12 +42,8 @@ public class CounterAgentController {
     public ModelAndView addAgent(@ModelAttribute("agentForm") @Valid CounterAgent agentForm,
                                  BindingResult bindingResult,
                                  Model model) {
-//        counterAgentValidator.validate(agentForm);
-        log.error("CREATE NEW AGENT");
-        log.error(agentForm.toString());
-        log.error(bindingResult.toString());
         if (bindingResult.hasErrors()){
-            log.error("AGENT HAS TROUBLES IN FIELDS");
+            log.error("[POST /counteragents/new]\tBindingResult: errors of validation CounterAgent");
             for (var err: bindingResult.getAllErrors()) {
                 log.error(err.toString());
             }
@@ -66,6 +53,7 @@ public class CounterAgentController {
         }
 
         crudService.save(agentForm);
+        log.info("[POST /counteragents/new]\tRedirect to page /counteragents");
         return new ModelAndView("redirect:/counteragents");
     }
 
@@ -73,18 +61,21 @@ public class CounterAgentController {
     public ModelAndView createAgentUpdateForm(@PathVariable("id") Long id, Model model) {
         CounterAgent agent = finderService.findById(id);
         model.addAttribute("updateAgent", agent);
+        log.info("[GET /counteragents/update/" + id + "]\tReturn page /update with CounterAgent");
         return new ModelAndView("/counteragents/update");
     }
 
     @PostMapping("/counteragents/update")
     public ModelAndView updateAgentPost(@ModelAttribute("updateAgent") CounterAgent agent) {
         crudService.update(agent);
+        log.info("[POST /counteragents/update]\tRedirect to page /counteragents");
         return new ModelAndView("redirect:/counteragents");
     }
 
     @GetMapping("/counteragents/delete/{id}")
     public ModelAndView deleteAgent(@PathVariable("id") Long id) {
         crudService.deleteById(id);
+        log.info("[GET /counteragents/delete/" + id + "]\tRedirect to page /counteragents");
         return new ModelAndView("redirect:/counteragents");
     }
 
@@ -92,7 +83,7 @@ public class CounterAgentController {
     public ModelAndView goToFindPage(Model model) {
         model.addAttribute("findByName", new CounterAgent());
         model.addAttribute("findByBikAndNumberAccount", new CounterAgent());
-
+        log.info("[GET /find]\tReturn page with two model of CounterAgent");
         return new ModelAndView("/counteragents/find");
     }
 
@@ -109,7 +100,7 @@ public class CounterAgentController {
         }
 
         model.addAttribute("finderAgent", finder);
-        log.error(finder.toString());
+        log.info("[POST /find/" + field + "]\tReturn page /showResult");
         return new ModelAndView("/counteragents/showResult");
     }
 
@@ -117,6 +108,7 @@ public class CounterAgentController {
     @Transactional
     public ModelAndView deleteAgentByName(@ModelAttribute("deleteAgent") CounterAgent agent) {
         crudService.deleteByName(agent.getName());
+        log.info("[POST /counteragents/deleteByName]\tRedirect to page /counteragents");
         return new ModelAndView("redirect:/counteragents");
     }
 

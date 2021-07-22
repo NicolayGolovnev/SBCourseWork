@@ -7,8 +7,6 @@ import ru.golovnev.entity.CounterAgentEntity;
 import ru.golovnev.model.CounterAgent;
 import ru.golovnev.dao.CounterAgentRepository;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,14 +19,13 @@ public class CounterAgentCrudService {
     public void save(CounterAgent agent) {
         CounterAgentEntity inputAgent = CounterAgentEntity.from(agent);
         repository.save(inputAgent);
+        log.info("[CrudService]\tRepository: save agent - " + inputAgent);
     }
 
     public void update(CounterAgent agent) {
         Optional<CounterAgentEntity> agentDBO = repository.findById(agent.getId());
-        log.error(agent.toString());
-        log.error(agentDBO.toString());
+
         if (agentDBO.isPresent()) {
-            log.error("UPDATE AGENT IS EXIST");
             CounterAgentEntity agentDB = agentDBO.get();
             agentDB.setName(agent.getName());
             agentDB.setInn(agent.getInn());
@@ -37,14 +34,17 @@ public class CounterAgentCrudService {
             agentDB.setBik(agent.getBik());
 
             repository.save(agentDB);
+            log.info("[CrudService]\tRepository: update agent - " + agentDB);
         }
     }
 
     public void deleteById(Long id) {
         repository.deleteById(id);
+        log.info("[CrudService]\tRepository: delete agent by id - " + id);
     }
 
     public void deleteByName(String name) {
         repository.deleteByName(name);
+        log.info("[CrudService]\tRepository: delete agent by name - " + name);
     }
 }

@@ -1,10 +1,12 @@
 package ru.golovnev.validations;
 
+import lombok.extern.slf4j.Slf4j;
 import ru.golovnev.validations.annotations.ValidInn;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+@Slf4j
 public class ValidInnValidator implements ConstraintValidator<ValidInn, String> {
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
@@ -13,6 +15,7 @@ public class ValidInnValidator implements ConstraintValidator<ValidInn, String> 
             context.buildConstraintViolationWithTemplate("Поле должно содержать 10 или 12 цифр")
                     .addBeanNode()
                     .addConstraintViolation();
+            log.error("[ValidInn]\tValidation failed");
             return false;
         }
         try {
@@ -23,10 +26,17 @@ public class ValidInnValidator implements ConstraintValidator<ValidInn, String> 
             context.buildConstraintViolationWithTemplate("Поле должно содержать 10 или 12 цифр")
                     .addBeanNode()
                     .addConstraintViolation();
+            log.error("[ValidInn]\tValidation failed");
             return false;
         }
-
-        return check10DigInn(value) || check12DigInn(value);
+        if (check10DigInn(value) || check12DigInn(value)) {
+            log.info("[ValidInn]\tValidation successful");
+            return true;
+        }
+        else {
+            log.error("[ValidInn]\tValidation failed");
+            return false;
+        }
     }
 
     private boolean check10DigInn(String inn) {

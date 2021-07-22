@@ -23,7 +23,14 @@ public class ValidNameValidator implements ConstraintValidator<ValidName, String
         for (var agent: agentList) {
             agentNames.add(agent.getName());
         }
-        log.error(agentList.toString());
-        return value != null && !agentNames.contains(value);
+        if (value != null && !agentNames.contains(value)){
+            log.info("[ValidName]\tValidation successful");
+            return true;
+        }
+        else {
+            log.error("[ValidName]\tValidation failed");
+            return false;
+        }
+
     }
 }
