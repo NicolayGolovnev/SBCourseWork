@@ -50,6 +50,7 @@ public class CounterAgentController {
             for (var err: bindingResult.getAllErrors()) {
                 log.error(err.toString());
             }
+//            List<ObjectError> allErrors = bindingResult.getAllErrors();
             model.addAttribute("agentForm", agentForm);
             return new ModelAndView("/counteragents/new");
         }
