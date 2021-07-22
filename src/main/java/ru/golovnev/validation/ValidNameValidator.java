@@ -1,10 +1,10 @@
-package ru.golovnev.validations;
+package ru.golovnev.validation;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.golovnev.model.CounterAgent;
 import ru.golovnev.service.CounterAgentFinderService;
-import ru.golovnev.validations.annotations.ValidName;
+import ru.golovnev.validation.annotation.ValidName;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

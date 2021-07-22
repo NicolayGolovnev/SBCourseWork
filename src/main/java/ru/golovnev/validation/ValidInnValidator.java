@@ -1,7 +1,7 @@
-package ru.golovnev.validations;
+package ru.golovnev.validation;
 
 import lombok.extern.slf4j.Slf4j;
-import ru.golovnev.validations.annotations.ValidInn;
+import ru.golovnev.validation.annotation.ValidInn;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

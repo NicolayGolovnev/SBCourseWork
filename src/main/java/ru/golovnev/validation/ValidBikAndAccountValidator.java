@@ -1,8 +1,8 @@
-package ru.golovnev.validations;
+package ru.golovnev.validation;
 
 import lombok.extern.slf4j.Slf4j;
 import ru.golovnev.model.CounterAgent;
-import ru.golovnev.validations.annotations.ValidBikAndAccount;
+import ru.golovnev.validation.annotation.ValidBikAndAccount;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

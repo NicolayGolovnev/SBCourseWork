@@ -1,7 +1,6 @@
-package ru.golovnev.validations.annotations;
+package ru.golovnev.validation.annotation;
 
-import ru.golovnev.validations.ValidBikAndAccountValidator;
-import ru.golovnev.validations.ValidInnValidator;
+import ru.golovnev.validation.ValidBikAndAccountValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
