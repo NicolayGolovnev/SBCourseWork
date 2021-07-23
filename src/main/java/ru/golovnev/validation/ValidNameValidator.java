@@ -11,6 +11,9 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс-валидатор для валидации поля наименования контрагента
+ */
 @Slf4j
 public class ValidNameValidator implements ConstraintValidator<ValidName, String> {
     @Autowired
@@ -31,6 +34,5 @@ public class ValidNameValidator implements ConstraintValidator<ValidName, String
             log.error("[ValidName]\tValidation failed");
             return false;
         }
-
     }
 }

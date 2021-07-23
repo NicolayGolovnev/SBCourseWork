@@ -11,6 +11,9 @@ import ru.golovnev.dao.CounterAgentRepository;
 
 import java.util.Optional;
 
+/**
+ * Сервис для работы с БД контрагентов
+ */
 @Service
 @Slf4j
 public class CounterAgentCrudService {
@@ -21,6 +24,10 @@ public class CounterAgentCrudService {
     @Autowired
     private MapperFacade mapperFacade;
 
+    /**
+     * Метод сохранения контрагента
+     * @param agent сохраняемый контрагент
+     */
     public void save(CounterAgent agent) {
         CounterAgentEntity saveAgent = mapperFacade.map(agent, CounterAgentEntity.class);
         repository.save(saveAgent);
@@ -28,6 +35,10 @@ public class CounterAgentCrudService {
         log.info("[CrudService]\tRepository: save agent - " + saveAgent);
     }
 
+    /**
+     * Метод обновления контрагента по ИД
+     * @param agent обновляемый контрагент
+     */
     public void update(CounterAgent agent) {
         Optional<CounterAgentEntity> agentDBO = repository.findById(agent.getId());
 
@@ -46,6 +57,10 @@ public class CounterAgentCrudService {
             throw new AgentNotFoundException("Agent[id = " + agent.getId() + "] could not find in repository");
     }
 
+    /**
+     * Метод удаления контрагента по ИД
+     * @param id ИД контрагента
+     */
     public void deleteById(Long id) {
         try {
             repository.deleteById(id);
@@ -56,6 +71,10 @@ public class CounterAgentCrudService {
         }
     }
 
+    /**
+     * Метод удаления контрагента по имени
+     * @param name наименование контрагента
+     */
     public void deleteByName(String name) {
         try {
             repository.deleteByName(name);

@@ -6,6 +6,9 @@ import ru.golovnev.validation.annotation.ValidInn;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
+/**
+ * Класс-валидатор для валидации поля ИНН контрагента
+ */
 @Slf4j
 public class ValidInnValidator implements ConstraintValidator<ValidInn, String> {
     @Override
@@ -39,6 +42,11 @@ public class ValidInnValidator implements ConstraintValidator<ValidInn, String> 
         }
     }
 
+    /**
+     * Метод проверки 10-значного ИНН
+     * @param inn передаваемый ИНН
+     * @return {@code true} - если ИНН корректный, иначе некорректный
+     */
     private boolean check10DigInn(String inn) {
         if (inn.length() != 10)
             return false;
@@ -50,6 +58,11 @@ public class ValidInnValidator implements ConstraintValidator<ValidInn, String> 
         return sum == Character.getNumericValue(inn.charAt(inn.length() - 1));
     }
 
+    /**
+     * Метод проверки 12-значного ИНН
+     * @param inn передаваемый ИНН
+     * @return {@code true} - если ИНН корректный, иначе некорректный
+     */
     private boolean check12DigInn(String inn) {
         if (inn.length() != 12)
             return false;

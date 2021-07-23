@@ -1,5 +1,8 @@
 package ru.golovnev.exception;
 
+/**
+ * Класс исключения AgentNotFoundException с перенаследуемыми методами
+ */
 public class AgentNotFoundException extends RuntimeException{
     public AgentNotFoundException() {super();}
 
