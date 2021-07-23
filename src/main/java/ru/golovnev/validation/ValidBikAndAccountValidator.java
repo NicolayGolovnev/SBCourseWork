@@ -23,10 +23,6 @@ public class ValidBikAndAccountValidator implements ConstraintValidator<ValidBik
             return false;
         }
         if (bik.length() != 9){
-            context.disableDefaultConstraintViolation();
-            context.buildConstraintViolationWithTemplate("Поле должно содержать 9 значений")
-                    .addPropertyNode("bik")
-                    .addConstraintViolation();
             log.error("[ValidBikAndAccount]\tValidation failed");
             return false;
         }

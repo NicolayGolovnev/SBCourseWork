@@ -21,8 +21,7 @@
             </tr>
             <tr>
                 <th align="right"><label for="name">Наименование</label></th>
-                <th align="left"><form:input type="text" id="name" path="name" maxlength="20"
-                                             minlength="1" placeholder="Поле не должно быть пустым"/></th>
+                <th align="left"><form:input type="text" id="name" path="name" maxlength="20"/></th>
             </tr>
             <tr>
                 <th></th>
