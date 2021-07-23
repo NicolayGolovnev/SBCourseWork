@@ -17,8 +17,8 @@ import javax.validation.constraints.Size;
 public class CounterAgent {
     private long id;
 
-    @NotEmpty(message = "Поле не должно быть пустым")
     @ValidName(message = "Такое наименование контрагента уже существует")
+    @NotEmpty(message = "Поле не должно быть пустым")
     private String name;
 
     @ValidInn(message = "Инн должен быть корректным (10-значный или 12-значный)")
@@ -31,5 +31,4 @@ public class CounterAgent {
 
     @Size(min = 9, max = 9, message = "БИК банка должен содержать 9 цифр")
     private String bik;
-
 }

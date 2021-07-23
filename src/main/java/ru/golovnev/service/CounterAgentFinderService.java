@@ -9,7 +9,6 @@ import ru.golovnev.entity.CounterAgentEntity;
 import ru.golovnev.exception.AgentNotFoundException;
 import ru.golovnev.model.CounterAgent;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

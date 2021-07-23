@@ -50,7 +50,6 @@ public class CounterAgentController {
             for (var err: bindingResult.getAllErrors()) {
                 log.error(err.toString());
             }
-//            List<ObjectError> allErrors = bindingResult.getAllErrors();
             model.addAttribute("agentForm", agentForm);
             return new ModelAndView("/counteragents/new");
         }
@@ -79,7 +78,7 @@ public class CounterAgentController {
                                         BindingResult bindingResult,
                                         Model model) {
         List<FieldError> errors = bindingResult.getFieldErrors().stream()
-                .filter(ferr -> !ferr.getField().equals("duplicateName"))
+                .filter(ferr -> !ferr.getField().equals("name"))
                 .collect(Collectors.toList());
         BindingResult newBinding = new BeanPropertyBindingResult(agent, "updateAgent");
         for (var err : errors) {
