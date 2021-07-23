@@ -9,6 +9,7 @@ import ru.golovnev.exception.AgentNotFoundException;
 import ru.golovnev.model.CounterAgent;
 import ru.golovnev.dao.CounterAgentRepository;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 /**
@@ -39,6 +40,7 @@ public class CounterAgentCrudService {
      * Метод обновления контрагента по ИД
      * @param agent обновляемый контрагент
      */
+    @Transactional
     public void update(CounterAgent agent) {
         Optional<CounterAgentEntity> agentDBO = repository.findById(agent.getId());
 

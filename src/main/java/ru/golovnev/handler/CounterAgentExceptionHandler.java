@@ -26,18 +26,18 @@ public class CounterAgentExceptionHandler {
      */
     @ExceptionHandler(AgentNotFoundException.class)
     public ResponseEntity<Object> agentNotFound(AgentNotFoundException exception) {
-        log.error("[ExceptionHandler]\tThrowed AgentNotFoundException - return ResponseEntity with HttpStatus NOT_FOUND");
+        log.error("[ExceptionHandler]\tThrowed AgentNotFoundException - return ResponseEntity with HttpStatus NOT_FOUND: " + exception);
         return new ResponseEntity<>("AgentNotFoundException: " + exception.getMessage(), HttpStatus.NOT_FOUND);
     }
 
     /**
      * Метод обрабоки исключения, когда аргумент не прошел валидацию
-     * @param ex вызванное исключение
+     * @param exception вызванное исключение
      * @return страницу http со статусом {@link HttpStatus#BAD_REQUEST} и сообщением исключения
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Object> handleValidationError(MethodArgumentNotValidException ex) {
-        BindingResult bindingResult = ex.getBindingResult();
+    public ResponseEntity<Object> handleValidationError(MethodArgumentNotValidException exception) {
+        BindingResult bindingResult = exception.getBindingResult();
         if (bindingResult.hasErrors()) {
             List<FieldError> errors = bindingResult.getFieldErrors();
             List<String> message = new ArrayList<>();
@@ -45,7 +45,7 @@ public class CounterAgentExceptionHandler {
                 message.add("@" + e.getField().toUpperCase() + ":" + e.getDefaultMessage());
             }
             log.error("[ExceptionHandler]\tThrowed MethodArgumentNotValidException - return " +
-                    "ResponseEntity with HttpStatus BAD_REQUEST");
+                    "ResponseEntity with HttpStatus BAD_REQUEST:" + exception);
             return new ResponseEntity<>("Caught exception: " + message, HttpStatus.BAD_REQUEST);
         }
         return null;
@@ -58,7 +58,7 @@ public class CounterAgentExceptionHandler {
      */
     @ExceptionHandler(value = Exception.class)
     public ResponseEntity<Object> responseEntityException(Exception exception) {
-        log.error("[ExceptionHandler]\tThrowed some exception - return ResponseEntity with HttpStatus INTERNAL_SERVER_ERROR");
+        log.error("[ExceptionHandler]\tThrowed some exception - return ResponseEntity with HttpStatus INTERNAL_SERVER_ERROR: " + exception);
         return new ResponseEntity<>("Caught exception: " + exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
