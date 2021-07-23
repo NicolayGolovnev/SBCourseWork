@@ -26,6 +26,17 @@ public class ValidBikAndAccountValidator implements ConstraintValidator<ValidBik
             log.error("[ValidBikAndAccount]\tValidation failed");
             return false;
         }
+        try {
+            Long.parseLong(bik);
+        }
+        catch (Exception e) {
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate("Поле должно содержать 9 цифр")
+                    .addBeanNode()
+                    .addConstraintViolation();
+            log.error("[ValidInn]\tValidation failed");
+            return false;
+        }
         if (bik.charAt(6) == '0' && bik.charAt(7) == '0')
             if (!checkAccountByRKC(bik, numberAccount)) {
                 context.disableDefaultConstraintViolation();
@@ -41,10 +52,10 @@ public class ValidBikAndAccountValidator implements ConstraintValidator<ValidBik
                 context.buildConstraintViolationWithTemplate("Коррсчет указан неверно - отсутствует в данном РКЦ (БИК)")
                         .addPropertyNode("numberAccount")
                         .addConstraintViolation();
-                log.error("[ValidBikAndAccount]\tValidation successful");
+                log.error("[ValidBikAndAccount]\tValidation failed");
                 return false;
             }
-        log.info("[ValidBikAndAccount]\tValidation failed");
+        log.info("[ValidBikAndAccount]\tValidation successful");
         return true;
     }
 

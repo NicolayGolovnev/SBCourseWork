@@ -1,8 +1,7 @@
 package ru.golovnev.exception;
 
 public class AgentNotFoundException extends RuntimeException{
-    public AgentNotFoundException() {
-    }
+    public AgentNotFoundException() {super();}
 
     public AgentNotFoundException(String message) {
         super(message);

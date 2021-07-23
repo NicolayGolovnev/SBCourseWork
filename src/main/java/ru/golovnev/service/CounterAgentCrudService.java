@@ -10,7 +10,6 @@ import ru.golovnev.model.CounterAgent;
 import ru.golovnev.dao.CounterAgentRepository;
 
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 @Slf4j
