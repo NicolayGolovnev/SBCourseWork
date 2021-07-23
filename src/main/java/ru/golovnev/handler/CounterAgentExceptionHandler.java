@@ -57,10 +57,8 @@ public class CounterAgentExceptionHandler {
      * @return страницу http со статусом {@link HttpStatus#INTERNAL_SERVER_ERROR} и сообщением исключения
      */
     @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<Object> exception(Exception exception) {
+    public ResponseEntity<Object> responseEntityException(Exception exception) {
         log.error("[ExceptionHandler]\tThrowed some exception - return ResponseEntity with HttpStatus INTERNAL_SERVER_ERROR");
         return new ResponseEntity<>("Caught exception: " + exception.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-
 }

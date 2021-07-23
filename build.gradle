@@ -25,6 +25,7 @@ dependencies {
     implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
     implementation group: 'net.rakugakibox.spring.boot', name: 'orika-spring-boot-starter', version: '1.9.0'
+    implementation group: 'com.github.ulisesbocchio', name: 'jasypt-spring-boot-starter', version: '3.0.3'
 
     testImplementation 'junit:junit:4.11'
     testImplementation('org.springframework.boot:spring-boot-starter-test:2.5.2')
