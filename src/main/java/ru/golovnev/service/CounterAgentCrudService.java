@@ -48,12 +48,22 @@ public class CounterAgentCrudService {
     }
 
     public void deleteById(Long id) {
-        repository.deleteById(id);
-        log.info("[CrudService]\tRepository: delete agent by id - " + id);
+        try {
+            repository.deleteById(id);
+            log.info("[CrudService]\tRepository: delete agent by id - " + id);
+        }
+        catch (Exception e) {
+            throw new AgentNotFoundException("Agent[id = " + id + "] could not find in repository");
+        }
     }
 
     public void deleteByName(String name) {
-        repository.deleteByName(name);
-        log.info("[CrudService]\tRepository: delete agent by name - " + name);
+        try {
+            repository.deleteByName(name);
+            log.info("[CrudService]\tRepository: delete agent by name - " + name);
+        }
+        catch (Exception e) {
+            throw new AgentNotFoundException("Agent[name = " + name + "] could not find in repository");
+        }
     }
 }
