@@ -22,6 +22,14 @@ public class ValidBikAndAccountValidator implements ConstraintValidator<ValidBik
             log.error("[ValidBikAndAccount]\tValidation failed");
             return false;
         }
+        if (bik.length() != 9){
+            context.disableDefaultConstraintViolation();
+            context.buildConstraintViolationWithTemplate("Поле должно содержать 9 значений")
+                    .addPropertyNode("bik")
+                    .addConstraintViolation();
+            log.error("[ValidBikAndAccount]\tValidation failed");
+            return false;
+        }
         if (bik.charAt(6) == '0' && bik.charAt(7) == '0')
             if (!checkAccountByRKC(bik, numberAccount)) {
                 context.disableDefaultConstraintViolation();

@@ -6,15 +6,20 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import ru.golovnev.model.CounterAgent;
 import ru.golovnev.service.CounterAgentCrudService;
 import ru.golovnev.service.CounterAgentFinderService;
+import ru.golovnev.validation.group.OnCreate;
+import ru.golovnev.validation.group.OnUpdate;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -42,7 +47,7 @@ public class CounterAgentController {
     }
 
     @PostMapping("/counteragents/new")
-    public ModelAndView addAgent(@ModelAttribute("agentForm") @Valid CounterAgent agentForm,
+    public ModelAndView addAgent(@ModelAttribute("agentForm") @Validated(OnCreate.class) CounterAgent agentForm,
                                  BindingResult bindingResult,
                                  Model model) {
         if (bindingResult.hasErrors()){
@@ -68,26 +73,26 @@ public class CounterAgentController {
     }
 
     @GetMapping("/counteragents/update")
+
     public ModelAndView updateAgent(@ModelAttribute("updateAgent") CounterAgent agent) {
         log.info("[GET /counteragents/update]\tReturn page with model CounterAgent");
         return new ModelAndView("/counteragents/update");
     }
 
     @PostMapping("/counteragents/update")
-    public ModelAndView updateAgentPost(@ModelAttribute("updateAgent") @Valid CounterAgent agent,
+    public ModelAndView updateAgentPost(@ModelAttribute("updateAgent") @Validated(OnUpdate.class) CounterAgent agent,
                                         BindingResult bindingResult,
                                         Model model) {
-        List<FieldError> errors = bindingResult.getFieldErrors().stream()
-                .filter(ferr -> !ferr.getField().equals("name"))
-                .collect(Collectors.toList());
-        BindingResult newBinding = new BeanPropertyBindingResult(agent, "updateAgent");
-        for (var err : errors) {
-            newBinding.addError(err);
+        try {
+            CounterAgent agentByName = finderService.findByName(agent.getName());
+            if (!agentByName.getId().equals(agent.getId()))
+                bindingResult.addError(new FieldError("updateAgent",
+                        "name", "Такое наименование контрагента уже существует"));
         }
-
-        if (newBinding.hasErrors()) {
+        catch (Exception ignored) { }
+        if (bindingResult.hasErrors()) {
             log.error("[POST /counteragents/update]\tBindingResult: errors of validation CounterAgent");
-            for (var err: newBinding.getAllErrors()) {
+            for (var err: bindingResult.getAllErrors()) {
                 log.error(err.toString());
             }
             model.addAttribute("updateAgent", agent);
@@ -137,5 +142,4 @@ public class CounterAgentController {
         log.info("[POST /counteragents/deleteByName]\tRedirect to page /counteragents");
         return new ModelAndView("redirect:/counteragents");
     }
-
 }

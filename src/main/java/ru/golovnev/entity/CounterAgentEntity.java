@@ -1,9 +1,11 @@
 package ru.golovnev.entity;
 
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 import ru.golovnev.model.CounterAgent;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @ToString
 @AllArgsConstructor
@@ -15,7 +17,7 @@ import javax.persistence.*;
 public class CounterAgentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(name = "name")
     private String name;

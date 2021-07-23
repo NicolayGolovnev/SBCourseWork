@@ -26,7 +26,7 @@
             </tr>
             <tr>
                 <th></th>
-                <th align="left" hidden><form:errors path="name" cssClass="error"/></th>
+                <th align="left"><form:errors path="name" cssClass="error"/></th>
             </tr>
             <tr>
                 <th align="right"><label for="inn">ИНН</label></th>

@@ -4,6 +4,8 @@ import lombok.*;
 import ru.golovnev.validation.annotation.ValidBikAndAccount;
 import ru.golovnev.validation.annotation.ValidInn;
 import ru.golovnev.validation.annotation.ValidName;
+import ru.golovnev.validation.group.OnCreate;
+import ru.golovnev.validation.group.OnUpdate;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -13,22 +15,22 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ValidBikAndAccount
+@ValidBikAndAccount(groups = {OnCreate.class, OnUpdate.class})
 public class CounterAgent {
-    private long id;
+    private Long id;
 
-    @ValidName(message = "Такое наименование контрагента уже существует")
-    @NotEmpty(message = "Поле не должно быть пустым")
+    @ValidName(groups = {OnCreate.class}, message = "Такое наименование контрагента уже существует")
+    @NotEmpty(groups = {OnCreate.class, OnUpdate.class}, message = "Поле не должно быть пустым")
     private String name;
 
-    @ValidInn(message = "Инн должен быть корректным (10-значный или 12-значный)")
+    @ValidInn(groups = {OnCreate.class, OnUpdate.class}, message = "Инн должен быть корректным (10-значный или 12-значный)")
     private String inn;
 
-    @Size(min = 9, max = 9, message = "Код должен содержать 9 символов")
+    @Size(groups = {OnCreate.class, OnUpdate.class}, min = 9, max = 9, message = "Код должен содержать 9 символов")
     private String kpp;
 
     private String numberAccount;
 
-    @Size(min = 9, max = 9, message = "БИК банка должен содержать 9 цифр")
+    @Size(groups = {OnCreate.class, OnUpdate.class}, min = 9, max = 9, message = "БИК банка должен содержать 9 цифр")
     private String bik;
 }
